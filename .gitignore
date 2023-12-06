@@ -1,0 +1,4 @@
+# Project exclude paths
+/coshop-core/target/
+/coshop-gateway/target/
+/target/

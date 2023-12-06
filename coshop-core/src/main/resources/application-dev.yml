@@ -1,0 +1,52 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /coshop
+
+
+spring:
+  spring:
+    application:
+      name: coshop-core  #服务名
+  datasource:
+    # 数据库地址  端口  数据库名
+    url: jdbc:mysql://127.0.0.1:3306/coshop?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
+    username: root    # 账号
+    password: 123456    # 密码
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  security:
+    user:
+      password: 123456
+      name: coshopse
+mybatis-plus:
+    mapper-locations: mapper/*.xml #这个配置是用来连接mapper接口和mapper配置类的
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #运行日志
+      map-underscore-to-camel-case: true #驼峰转换
+    type-aliases-package: com.example.springbootdemo.model #实体类扫描包
+
+
+logging:
+  config: classpath:logback-spring.xml
+
+# 访问示例：http://localhost:9595/monitor
+management:
+  endpoints:
+    web:
+      # actuator的访问路径，替换默认/actuator
+      base-path: /monitor
+      # 设置是否暴露端点 默认只有health和info可见
+      exposure:
+        # include: env   # 方式1: 暴露端点env，配置多个以,隔开
+        include: "*"     # 方式2: 包括所有端点，注意需要添加引号
+        # 排除端点
+        exclude: shutdown
+  server:
+    port: 9595  #新开监控端口，不和应用用同一个端口
+  endpoint:
+    health:
+      show-details: always # 显示db、redis、rabbti连接情况等
+    shutdown:
+      enabled: true  #默认情况下，除shutdown以外的所有端点均已启用。手动开启
+    env:
+      enabled: false

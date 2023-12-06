@@ -1,0 +1,37 @@
+server:
+  port: 9527
+  servlet:
+    context-path: /
+
+
+
+spring:
+  application:
+    name: coshop-gateway  #服务名
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: coshop-core
+          uri: http://localhost:8080
+          predicates:
+            - Path=/coshop/**
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+  main:
+    web-application-type: reactive
+
+
+org:
+  my:
+    jwt:
+      # 跳过认证路由
+      skipAuthUrls:
+        - /user/login
+
+
+login:
+  timeout: 3600
